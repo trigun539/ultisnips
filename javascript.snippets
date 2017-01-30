@@ -12,7 +12,7 @@ snippet rcomp "reactComponent"
 import React, { Component } from 'react';
 import styles               from './styles.css';
 
-export default class ${1:MyComponent} extends Component {
+class ${1:MyComponent} extends Component {
 
 	render () {
 		const {} = this.props;
@@ -23,6 +23,10 @@ export default class ${1:MyComponent} extends Component {
 	}
 
 }
+
+MyComponent.propTypes = {};
+
+export default MyComponent;
 endsnippet
 
 #
@@ -43,4 +47,16 @@ endsnippet
 
 snippet end "console.timeEnd"
 console.timeEnd('${1}');
+endsnippet
+
+snippet ufunc "unanimousFunction"
+(${1}) => {${2}}
+endsnippet
+
+snippet rclassn "reactClassName"
+className={ styles['${1}'] }
+endsnippet
+
+snippet // "reactComment"
+{ // ${1}}
 endsnippet
