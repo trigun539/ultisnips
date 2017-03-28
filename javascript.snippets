@@ -79,3 +79,18 @@ it('${1}', () => {
 });
 endsnippet
 
+snippet etbt "expect to equal true"
+expect(${1}).to.be.true;
+endsnippet
+
+snippet etbf "expect to equal false"
+expect(${1}).to.be.false;
+endsnippet
+
+snippet etbe "expect to be equal"
+expect(${1}).to.be.equal(${2});
+endsnippet
+
+snippet etde "expect deep equal"
+expect(${1}).to.deep.equal(${2});
+endsnippet
