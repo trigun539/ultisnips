@@ -1,0 +1,23 @@
+snippet jcm "Java Class Main"
+public class Main {
+	public static void main (String[] args) {
+		// System.out.println("Hello world");
+	}
+}
+endsnippet
+
+snippet jc "Java Class"
+public class ${1:MyClass} {
+	public ${2} (${3}) {
+		${4}
+	}
+}
+endsnippet
+
+#
+# Logging
+#
+
+snippet sout "System out print new line"
+System.out.println(${1});
+endsnippet
