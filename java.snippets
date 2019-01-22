@@ -21,3 +21,62 @@ endsnippet
 snippet sout "System out print new line"
 System.out.println(${1});
 endsnippet
+
+
+#################################################################################
+# Spring Boot
+#################################################################################
+snippet sprc "Spring Boot Rest Controller"
+package ${1:com.eperez.myproject};
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import ${2:com.eperez.myproject.models.User};
+import ${3:com.eperez.myproject.repositories.UserRepository};
+
+@RestController
+@RequestMapping("${4:api/v1}")
+public class ${5:UserController} {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@RequestMapping(value = "users", method = RequestMethod.GET)
+	public List<User> list() {
+		return userRepository.findAll();
+	}
+
+	@RequestMapping(value = "users", method = RequestMethod.POST)
+	public User create(@RequestBody User user) {
+		return userRepository.saveAndFlush(user);
+	}
+
+	@RequestMapping(value = "users/{id}", method = RequestMethod.GET)
+	public User get(@PathVariable Long id) {
+		return userRepository.findOne(id);
+	}
+
+	@RequestMapping(value = "users/{id}", method = RequestMethod.PUT)
+	public User update(@PathVariable Long id, @RequestBody User user) {
+		User oldUser = userRepository.findOne(id);
+		BeanUtils.copyProperties(user, oldUser);
+		return userRepository.saveAndFlush(oldUser);
+	}
+
+	@RequestMapping(value = "users/{id}", method = RequestMethod.DELETE)
+	public User delete(@PathVariable Long id) {
+		User oldUser = userRepository.findOne(id);
+		userRepository.delete(oldUser);
+		return oldUser;
+	}
+
+}
+endsnippet
