@@ -89,10 +89,28 @@ public class ${2:User} {
 }
 endsnippet
 
-
 #################################################################################
 # Spring Boot
 #################################################################################
+
+snippet spmc "Spring Boot Java Main Class"
+package ${1:io.eperez.myproject};
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * Sample Spring Boot application
+ */
+
+@SpringBootApplication
+public class App {
+	public static void main( String[] args ) {
+		SpringApplication.run(App.class, args);
+	}
+}
+endsnippet
+
 snippet sprc "Spring Boot Rest Controller"
 package ${1:com.eperez.myproject};
 
@@ -143,6 +161,58 @@ public class ${5:UserController} {
 		User oldUser = userRepository.findOne(id);
 		userRepository.delete(oldUser);
 		return oldUser;
+	}
+
+}
+endsnippet
+
+snippet sprepository "Spring boot repository"
+package ${1:io.eperez.myproject.repository};
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import ${2:io.eperez.myproject.models.User};
+
+public interface ${3:UserRepository} extends JpaRepository<${4:User}, Long> {}
+endsnippet
+
+
+snippet spperconfig "Spring boot repository"
+package ${1:io.eperez.myproject.config};
+
+import javax.sql.DataSource;
+
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+public class PersistenceConfiguration {
+	@Bean
+	@ConfigurationProperties(prefix="spring.datasource")
+	@Primary
+	public DataSource dataSource () {
+		return DataSourceBuilder.create().build();
+	}
+}
+endsnippet
+
+#################################################################################
+# Testing
+#################################################################################
+
+snippet jtc "Java test class"
+package ${1:io.eperez.myproject};
+
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class AppTest {
+
+	@Test
+	public void testApp() {
+		assertEquals("sample", "sample");
 	}
 
 }
