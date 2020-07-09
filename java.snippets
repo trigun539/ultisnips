@@ -1,0 +1,219 @@
+#################################################################################
+# Comments
+#################################################################################
+
+snippet ** "Block comment" b
+/**
+${VISUAL:/((?m)^)/ * /g}$0
+ */
+endsnippet
+
+#################################################################################
+# Classes
+#################################################################################
+
+# Main class
+
+snippet jcm "Java Class Main"
+public class Main {
+	public static void main (String[] args) {
+		// System.out.println("Hello world");
+	}
+}
+endsnippet
+
+# Simple Class
+
+snippet jc "Java Class"
+public class ${1:MyClass} {
+	public ${2} (${3}) {
+		${4}
+	}
+}
+endsnippet
+
+#################################################################################
+# Logging
+#################################################################################
+
+snippet sysout "System out print new line"
+System.out.println(${1});
+endsnippet
+
+snippet syserr "System error print new line"
+System.error.println(${1});
+endsnippet
+
+#################################################################################
+# DAO
+#################################################################################
+
+snippet jm "Model"
+package ${1:com.eperez.myproject.models};
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class ${2:User} {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	Long id;
+	String name;
+
+	public User() { }
+
+	public User(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+}
+endsnippet
+
+#################################################################################
+# Spring Boot
+#################################################################################
+
+snippet spmc "Spring Boot Java Main Class"
+package ${1:io.eperez.myproject};
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * Sample Spring Boot application
+ */
+
+@SpringBootApplication
+public class App {
+	public static void main( String[] args ) {
+		SpringApplication.run(App.class, args);
+	}
+}
+endsnippet
+
+snippet sprc "Spring Boot Rest Controller"
+package ${1:com.eperez.myproject};
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import ${2:com.eperez.myproject.models.User};
+import ${3:com.eperez.myproject.repositories.UserRepository};
+
+@RestController
+@RequestMapping("${4:api/v1}")
+public class ${5:UserController} {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@RequestMapping(value = "users", method = RequestMethod.GET)
+	public List<User> list() {
+		return userRepository.findAll();
+	}
+
+	@RequestMapping(value = "users", method = RequestMethod.POST)
+	public User create(@RequestBody User user) {
+		return userRepository.saveAndFlush(user);
+	}
+
+	@RequestMapping(value = "users/{id}", method = RequestMethod.GET)
+	public User get(@PathVariable Long id) {
+		return userRepository.findOne(id);
+	}
+
+	@RequestMapping(value = "users/{id}", method = RequestMethod.PUT)
+	public User update(@PathVariable Long id, @RequestBody User user) {
+		User oldUser = userRepository.findOne(id);
+		BeanUtils.copyProperties(user, oldUser);
+		return userRepository.saveAndFlush(oldUser);
+	}
+
+	@RequestMapping(value = "users/{id}", method = RequestMethod.DELETE)
+	public User delete(@PathVariable Long id) {
+		User oldUser = userRepository.findOne(id);
+		userRepository.delete(oldUser);
+		return oldUser;
+	}
+
+}
+endsnippet
+
+snippet sprepository "Spring boot repository"
+package ${1:io.eperez.myproject.repository};
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import ${2:io.eperez.myproject.models.User};
+
+public interface ${3:UserRepository} extends JpaRepository<${4:User}, Long> {}
+endsnippet
+
+
+snippet spperconfig "Spring boot repository"
+package ${1:io.eperez.myproject.config};
+
+import javax.sql.DataSource;
+
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+public class PersistenceConfiguration {
+	@Bean
+	@ConfigurationProperties(prefix="spring.datasource")
+	@Primary
+	public DataSource dataSource () {
+		return DataSourceBuilder.create().build();
+	}
+}
+endsnippet
+
+#################################################################################
+# Testing
+#################################################################################
+
+snippet jtc "Java test class"
+package ${1:io.eperez.myproject};
+
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class AppTest {
+
+	@Test
+	public void testApp() {
+		assertEquals("sample", "sample");
+	}
+
+}
+endsnippet
