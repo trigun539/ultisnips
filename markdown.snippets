@@ -1,0 +1,27 @@
+############################
+# Code Blocks
+############################
+
+snippet cjs "JavaScript Code Block"
+\`\`\`javascript
+${1}
+\`\`\`
+endsnippet
+
+snippet cbash "Bash Code Block"
+\`\`\`bash
+${1}
+\`\`\`
+endsnippet
+
+snippet metap "Front matter for post"
+---
+path: "${1}"
+date: "${2}"
+title: "${3}"
+preview: "${4}"
+tags: [${5}]
+category: [${6}]
+type: "post"
+---
+endsnippet
