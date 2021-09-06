@@ -1,0 +1,118 @@
+snippet ** "docblock" b
+/**
+${VISUAL:/((?m)^)/ * /g}$0
+ */
+endsnippet
+
+snippet "imp(ort)?" "import" !br
+import ${1:Module} from '${2}$1${3}';
+endsnippet
+
+snippet rc "reactComponent"
+import React, { Component } from 'react';
+import styles               from './styles.css';
+
+class ${1:MyComponent} extends Component {
+
+	render () {
+		const {} = this.props;
+
+		return (
+			<h1>Sample Component</h1>
+		);
+	}
+
+}
+
+MyComponent.propTypes = {};
+
+export default MyComponent;
+endsnippet
+
+snippet fc "reactComponent"
+import React from 'react';
+import styles from './styles.css';
+
+const ${1:MyComponent} = () => {
+	return (
+		<h1>Sample Component</h1>
+	)
+}
+
+MyComponent.propTypes = {};
+MyComponent.defaultValues = {};
+
+export default MyComponent;
+endsnippet
+
+snippet "for" "forLoop" !br
+for (let i = 0; i < ${1}; i++) {
+	${2}
+}
+endsnippet
+
+#
+# console methods
+#
+
+snippet dir "console.dir"
+console.dir(${1});
+endsnippet
+
+snippet log "console.log"
+console.log(${1});
+endsnippet
+
+snippet time "console.time"
+console.time('${1}');
+endsnippet
+
+snippet end "console.timeEnd"
+console.timeEnd('${1}');
+endsnippet
+
+snippet uf "unanimousFunction"
+(${1}) => {${2}}
+endsnippet
+
+snippet mf "unanimousMapFunction"
+(${1}, ${2}) => {${3}}
+endsnippet
+
+snippet rcn "reactClassName"
+className={ styles['${1}'] }
+endsnippet
+
+snippet r// "reactComment"
+{ // ${1}}
+endsnippet
+
+#
+# UNIT TESTING
+#
+
+snippet utd "unitTestDescribe"
+describe('${1}', () => {
+});
+endsnippet
+
+snippet uti "unitTestIt"
+it('${1}', () => {
+});
+endsnippet
+
+snippet etbt "expect to equal true"
+expect(${1}).to.be.true;
+endsnippet
+
+snippet etbf "expect to equal false"
+expect(${1}).to.be.false;
+endsnippet
+
+snippet etbe "expect to be equal"
+expect(${1}).to.be.equal(${2});
+endsnippet
+
+snippet etde "expect deep equal"
+expect(${1}).to.deep.equal(${2});
+endsnippet
